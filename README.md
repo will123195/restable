@@ -7,7 +7,7 @@ Isomorphic REST API pattern for Express
 ## Install
 
 ```
-npm install --save restable
+npm install --save restable express
 ```
 
 ## Usage
