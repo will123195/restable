@@ -1,3 +1,6 @@
+var querystring = require('querystring')
+var merge = require('deep-extend')
+
 var api = module.exports = function api (opts) {
   if (!(this instanceof api)) {
     return new api(opts)
@@ -28,11 +31,20 @@ api.prototype.delete = function (resource, opts, cb) {
 api.prototype.run = function (method, resource, opts, cb) {
   opts = opts || {}
   cb = cb || function () {}
+  var i = resource.indexOf('?')
+  var qs = {}
+  if (i > -1) {
+    qs = querystring.parse(resource.substring(i + 1))
+    resource = resource.substring(0, i)
+  }
   if (typeof opts === 'function') {
     cb = opts
     opts = {}
   }
-  var $ = Object.assign({}, this.opts.helpers, opts)
+  var $ = merge({
+    query: qs,
+    body: {}
+  }, this.opts.helpers, opts)
   $.send = function (code, response) {
     if (typeof response === 'undefined') {
       response = code

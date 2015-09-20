@@ -2,7 +2,7 @@
 
 Isomorphic REST API pattern for Express
 
-Save time by writing your data access layer once and call the methods directly server-side *or* via REST API client-side.
+Keep it DRY with a RESTful data access layer that can be called directly server-side *or* via REST API client-side.
 
 [![Build Status](https://travis-ci.org/will123195/restable.svg)](https://travis-ci.org/will123195/restable)
 
@@ -20,10 +20,10 @@ npm install --save restable express
 var restable = require('restable')
 var db = require('./db')
 
-var hello = {
+var books = {
   get: function ($) {
     $.send({
-      hello: $.db.getSomething()
+      book: $.db.getBook($.query.id)
     })
   },
   post: function ($) {
@@ -33,7 +33,7 @@ var hello = {
 
 var api = restable({
   resources: {
-    hello: hello
+    books: books
   },
   helpers: {
     db: db
@@ -44,8 +44,12 @@ var api = restable({
 #### Consume your endpoint server-side (no http)
 
 ```js
-api.get('hello', function (code, data) {
-  console.log('hello:', data.hello)
+api.get('books', {
+  query: {
+    id: 123
+  }
+}, function (code, data) {
+  console.log('book:', data.book)
 })
 ```
 
@@ -64,9 +68,9 @@ app.listen(8080)
 var client = require('idiot')({
   baseUrl: 'http://localhost:8080/api/'
 })
-client.get('hello', function (code, data) {
-  console.log('hello:', data.hello)
+client.get('books?id=123', function (code, data) {
+  console.log('book:', data.hello)
 })
 ```
 
-Notice the code for client-side and server-side API calls are exactly the same. Except server-side is obviously faster because there is no http request!
+Notice the API can be called on the client-side and server-side exactly the same way. Except server-side is obviously faster because there is no http request!

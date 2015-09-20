@@ -3,7 +3,9 @@ module.exports = {
   'a': {
     get: function ($) {
       $.send({
-        a: $.abc
+        a: $.abc,
+        b: $.query.b,
+        d: $.query.d
       })
     },
     post: function ($) {

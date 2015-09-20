@@ -26,18 +26,16 @@ test('get', function (t) {
   })
 })
 
-test('delete', function (t) {
-  api.delete('a/b', function (code, data) {
-    t.equal(code, 400)
-    t.equal(data.error.message, 'err!')
-    t.end()
-  })
-})
-
-test('put', function (t) {
-  api.put('a/b', function (code, data) {
-    t.equal(code, 420)
-    t.equal(data.error.msg, 'wacky')
+test('get qs', function (t) {
+  api.get('a?b=c', {
+    query: {
+      d: 'e'
+    }
+  }, function (code, data) {
+    t.equal(code, 200)
+    t.equal(data.a, 'xyz')
+    t.equal(data.b, 'c')
+    t.equal(data.d, 'e')
     t.end()
   })
 })
@@ -54,6 +52,22 @@ test('post', function (t) {
     t.equal(code, 201)
     t.equal(data.first, 'one')
     t.equal(data.second, 'two')
+    t.end()
+  })
+})
+
+test('put', function (t) {
+  api.put('a/b', function (code, data) {
+    t.equal(code, 420)
+    t.equal(data.error.msg, 'wacky')
+    t.end()
+  })
+})
+
+test('delete', function (t) {
+  api.delete('a/b', function (code, data) {
+    t.equal(code, 400)
+    t.equal(data.error.message, 'err!')
     t.end()
   })
 })
@@ -83,18 +97,16 @@ test('GET', function (t) {
   })
 })
 
-test('DELETE', function (t) {
-  client.delete('a/b', function (code, data) {
-    t.equal(code, 400)
-    t.equal(data.error.message, 'err!')
-    t.end()
-  })
-})
-
-test('PUT', function (t) {
-  client.put('a/b', function (code, data) {
-    t.equal(code, 420)
-    t.equal(data.error.msg, 'wacky')
+test('GET qs', function (t) {
+  client.get('a?b=c', {
+    query: {
+      d: 'e'
+    }
+  }, function (code, data) {
+    t.equal(code, 200)
+    t.equal(data.a, 'xyz')
+    t.equal(data.b, 'c')
+    t.equal(data.d, 'e')
     t.end()
   })
 })
@@ -111,6 +123,22 @@ test('POST', function (t) {
     t.equal(code, 201)
     t.equal(data.first, 'one')
     t.equal(data.second, 'two')
+    t.end()
+  })
+})
+
+test('PUT', function (t) {
+  client.put('a/b', function (code, data) {
+    t.equal(code, 420)
+    t.equal(data.error.msg, 'wacky')
+    t.end()
+  })
+})
+
+test('DELETE', function (t) {
+  client.delete('a/b', function (code, data) {
+    t.equal(code, 400)
+    t.equal(data.error.message, 'err!')
     t.end()
   })
 })
