@@ -1,5 +1,5 @@
 var querystring = require('querystring')
-var merge = require('deep-extend')
+var xtend = require('xtend')
 
 var api = module.exports = function api (opts) {
   if (!(this instanceof api)) {
@@ -32,19 +32,18 @@ api.prototype.run = function (method, resource, opts, cb) {
   opts = opts || {}
   cb = cb || function () {}
   var i = resource.indexOf('?')
-  var qs = {}
+  var query = {}
   if (i > -1) {
-    qs = querystring.parse(resource.substring(i + 1))
+    query = querystring.parse(resource.substring(i + 1))
     resource = resource.substring(0, i)
   }
   if (typeof opts === 'function') {
     cb = opts
     opts = {}
   }
-  var $ = merge({
-    query: qs,
-    body: {}
-  }, this.opts.helpers, opts)
+  var $ = xtend(this.opts.helpers, opts)
+  $.query = xtend(query, opts.query)
+  $.body = opts.body || {}
   $.send = function (code, response) {
     if (typeof response === 'undefined') {
       response = code

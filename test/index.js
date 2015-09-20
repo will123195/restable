@@ -79,6 +79,17 @@ test('404', function (t) {
   })
 })
 
+test('circular', function (t) {
+  var c = {}
+  c.c = c
+  api.get('a', {
+    c: c
+  }, function (code, data) {
+    t.equal(code, 200)
+    t.end()
+  })
+})
+
 test('start rest service', function (t) {
   app = express()
   app.use('/api', api.rest)
