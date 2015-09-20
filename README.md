@@ -2,6 +2,8 @@
 
 Isomorphic REST API pattern for Express
 
+[![Build Status](https://travis-ci.org/will123195/restable.svg)](https://travis-ci.org/will123195/restable)
+
 ## Install
 
 ```
