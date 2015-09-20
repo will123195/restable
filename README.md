@@ -16,7 +16,7 @@ npm install --save restable express
 
 You'll notice the syntax for consuming your API from the client-side and server-side is identical. Except it's obviously faster from the server-side because there is no http request!
 
-#### Create your server-side api endpoints
+#### Create your API
 
 ```js
 var restable = require('restable')
@@ -45,7 +45,7 @@ var api = restable({
 })
 ```
 
-#### Expose your endpoints as a REST API
+#### Expose your API as a REST service
 
 ```js
 var express = require('express')
@@ -54,7 +54,7 @@ app.use('/api', api.rest)
 app.listen(8080)
 ```
 
-#### Consume your endpoint client-side
+#### Consume your API with http REST client
 
 ```js
 var client = require('idiot')({
@@ -71,7 +71,7 @@ client.get('books', {
 })
 ```
 
-#### Consume your endpoint server-side (no http)
+#### Consume your API directly (no http)
 
 ```js
 var api = restable(opts)
