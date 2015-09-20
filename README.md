@@ -4,7 +4,7 @@ A Simple Isomorphic REST API Pattern for Express
 
 [![Build Status](https://travis-ci.org/will123195/restable.svg)](https://travis-ci.org/will123195/restable)
 
-Build a server-side REST API that can be called directly *or* via REST client.
+Build a server-side REST API that can be called directly *or* via http REST client.
 
 ## Install
 
