@@ -1,10 +1,10 @@
 # restable
 
-Simple Isomorphic REST API Pattern for Express
+A Simple Isomorphic REST API Pattern for Express
 
 [![Build Status](https://travis-ci.org/will123195/restable.svg)](https://travis-ci.org/will123195/restable)
 
-Keep it DRY with a RESTful server-side data access layer that can be called directly *or* via REST client.
+Build a server-side REST API that can be called directly *or* via REST client.
 
 ## Install
 
@@ -14,7 +14,9 @@ npm install --save restable express
 
 ## Usage
 
-#### Create your server-side endpoints
+You'll notice the syntax for consuming your API from the client-side and server-side is identical. Except it's obviously faster from the server-side because there is no http request!
+
+#### Create your server-side api endpoints
 
 ```js
 var restable = require('restable')
@@ -72,6 +74,8 @@ client.get('books', {
 #### Consume your endpoint server-side (no http)
 
 ```js
+var api = restable(opts)
+
 // GET /api/books?id=123 (but no http!)
 api.get('books', {
   query: {
@@ -88,8 +92,6 @@ api.post('books', function (statusCode, data) {
   }
 })
 ```
-
-Notice consuming the API is identical on client-side and server-side. Except the server-side is obviously faster because there is no http request!
 
 ## Advanced usage
 
@@ -109,11 +111,13 @@ function ($) {
 }
 ```
 
-But oh no! This won't work if we call it from the server-side without a `req` object. Don't worry, we can specify `req` like this:
+But oh no! This won't work if we call it from the server-side without a `req` object. But it's cool since we can specify `req` like this:
 
 ##### GET /my-books.html
 ```js
+// express route
 app.get('/my-books.html', function (req, res) {
+  // get the books for the logged in user
   api.get('my/books', {
     req: req
   }, function (statusCode, data) {
