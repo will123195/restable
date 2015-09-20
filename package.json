@@ -4,7 +4,7 @@
   "description": "Isomorphic REST API pattern for Express",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tape test"
   },
   "repository": {
     "type": "git",
@@ -13,7 +13,9 @@
   "author": "will123195",
   "license": "MIT",
   "devDependencies": {
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "idiot": "^1.0.0",
+    "tape": "^4.2.0"
   },
   "dependencies": {
     "body-parser": "^1.14.0"

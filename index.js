@@ -17,6 +17,14 @@ api.prototype.post = function (resource, opts, cb) {
   this.run('post', resource, opts, cb)
 }
 
+api.prototype.put = function (resource, opts, cb) {
+  this.run('put', resource, opts, cb)
+}
+
+api.prototype.delete = function (resource, opts, cb) {
+  this.run('delete', resource, opts, cb)
+}
+
 api.prototype.run = function (method, resource, opts, cb) {
   opts = opts || {}
   cb = cb || function () {}
@@ -40,10 +48,23 @@ api.prototype.run = function (method, resource, opts, cb) {
     if (typeof response === 'string') {
       var message = response
       response = {
-        message: message
+        error: {
+          message: message
+        }
+      }
+    } else {
+      var obj = response
+      response = {
+        error: obj
       }
     }
     cb(code, response)
+  }
+  if (!this.resources[resource]
+    || !this.resources[resource][method]) {
+    return cb(404, {
+      message: 'Not found.'
+    })
   }
   this.resources[resource][method]($)
 }

@@ -49,7 +49,7 @@ api.get('hello', function (code, data) {
 ```js
 var express = require('express')
 var app = express()
-app.get('/api', api.rest)
+app.use('/api', api.rest)
 app.listen(8080)
 ```
 
@@ -57,7 +57,7 @@ app.listen(8080)
 
 ```js
 var client = require('idiot')({
-  server: 'http://localhost:8080/api'
+  baseUrl: 'http://localhost:8080/api/'
 })
 client.get('hello', function (code, data) {
   console.log('hello:', data.hello)
