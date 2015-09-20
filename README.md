@@ -52,8 +52,6 @@ app.use('/api', api.rest)
 app.listen(8080)
 ```
 
-Notice the API is identical on client-side and server-side. Except server-side is obviously faster because there is no http request:
-
 #### Consume your endpoint server-side (no http)
 
 ```js
@@ -88,13 +86,15 @@ client.get('books', {
 })
 ```
 
+Notice consuming the API is identical on client-side and server-side. Except the server-side is obviously faster because there is no http request!
+
 ## Advanced usage
 
 You might have endpoints that behave differently based on the user that is calling it.
 
-When your endpoint is called via REST, `req` and `res` objects are available. For example, you might be using some sort of authentication middleware:
+When your endpoint is called via http, the `req` and `res` objects are available. For example, you might be using some sort of authentication middleware:
 
-GET /api/my/books
+##### GET /api/my/books
 ```js
 function ($) {
   if (!$.req.authenticated) {
@@ -106,9 +106,9 @@ function ($) {
 }
 ```
 
-Oh no! This won't work if we call it directly from the server-side because there is no `req` object. Unless we specify it like this:
+But oh no! This won't work if we call it from the server-side without a `req` object. Don't worry, we can specify `req` like this:
 
-GET /my-books.html
+##### GET /my-books.html
 ```js
 app.get('/my-books.html', function (req, res) {
   api.get('my/books', {
