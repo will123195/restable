@@ -52,16 +52,15 @@ app.use('/api', api.rest)
 app.listen(8080)
 ```
 
-#### Consume your endpoint server-side (no http)
+#### Consume your endpoint client-side
 
 ```js
-api.post('books', function (statusCode, data) {
-  if (data.error) {
-    console.log(data.error.message)
-  }
+var client = require('idiot')({
+  baseUrl: 'http://localhost:8080/api/'
 })
 
-api.get('books', {
+// GET /api/books?id=123
+client.get('books', {
   query: {
     id: 123
   }
@@ -70,19 +69,23 @@ api.get('books', {
 })
 ```
 
-#### Consume your endpoint client-side
+#### Consume your endpoint server-side (no http)
 
 ```js
-var client = require('idiot')({
-  baseUrl: 'http://localhost:8080/api/'
-})
-
-client.get('books', {
+// GET /api/books?id=123 (but no http!)
+api.get('books', {
   query: {
     id: 123
   }
 }, function (statusCode, data) {
   console.log('book:', data.book)
+})
+
+// POST /api/books (but no http!)
+api.post('books', function (statusCode, data) {
+  if (data.error) {
+    console.log(data.error.message)
+  }
 })
 ```
 
