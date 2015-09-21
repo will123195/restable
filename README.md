@@ -14,7 +14,7 @@ npm install --save restable express
 
 ## Usage
 
-You'll notice the syntax for consuming your API from the client-side and server-side is identical. Except it's obviously faster from the server-side because there is no http request!
+The syntax for consuming your API from the client-side and server-side is identical, but it's obviously faster from the server-side because there is no http request!
 
 #### Create your API
 
@@ -93,6 +93,37 @@ api.post('books', function (statusCode, data) {
 })
 ```
 
+
+## Options
+
+### restable(opts)
+*opts*
+- **resources** - an object whose keys are resource names
+    - a resource is an object of `get`, `post`, `put` and/or `delete` methods
+- **helpers** - an object whose keys are helper names
+    - a helper is a value that is available in all resource methods
+    - passing in your `db` as a helper is recommended
+
+Your resource methods need to call either `send(json)` or `error(message)`.
+
+```js
+var myResource = {
+  get: function ($) {
+    // $.myHelper
+    // $.myOtherHelper
+
+    // $.send(json)
+    // $.send(200, json)
+
+    // $.error(message)
+    // $.error(obj)
+    // $.error(400, message)
+    // $.error(400, obj)
+  }
+}
+```
+
+
 ## Advanced usage
 
 You might have endpoints that behave differently based on the user that is calling it.
@@ -101,14 +132,21 @@ When your endpoint is called via http, the `req` and `res` objects are available
 
 ##### GET /api/my/books
 ```js
-function ($) {
-  if (!$.req.authenticated) {
-    return $.error(403, 'access denied')
+var api = restable({
+  resources: {
+    'my/books': {
+      get: function ($) {
+        if (!$.req.authenticated) {
+          return $.error(403, 'access denied')
+        }
+        $.send({
+          books: []
+        })
+      }
+    }
   }
-  $.send({
-    books: []
-  })
-}
+})
+var server = api.rest.listen(8080)
 ```
 
 But oh no! This won't work if we call it from the server-side without a `req` object. But it's cool since we can specify `req` like this:
