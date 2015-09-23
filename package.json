@@ -1,6 +1,6 @@
 {
   "name": "restable",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Isomorphic REST API pattern for Express",
   "main": "index.js",
   "scripts": {
