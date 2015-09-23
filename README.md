@@ -4,7 +4,7 @@ A Simple Isomorphic REST API Pattern for Express
 
 [![Build Status](https://travis-ci.org/will123195/restable.svg)](https://travis-ci.org/will123195/restable)
 
-Build a server-side REST API that can be called directly *or* via http REST client.
+Build a server-side RESTful API that can be called directly *or* via http REST client.
 
 ## Install
 
@@ -99,10 +99,10 @@ api.post('books', function (statusCode, data) {
 ### restable(opts)
 *opts*
 - **resources** - an object whose keys are resource names
-    - a resource is an object of `get`, `post`, `put` and/or `delete` methods
+    - a resource is an object with `get`, `post`, `put` and/or `delete` methods
 - **helpers** - an object whose keys are helper names
     - a helper is a value that is available in all resource methods
-    - passing in your `db` as a helper is recommended
+    - i.e. passing in your `db` as a helper is recommended
 
 Your resource methods need to call either `send(json)` or `error(message)`.
 
@@ -146,7 +146,7 @@ var api = restable({
     }
   }
 })
-var server = api.rest.listen(8080)
+api.rest.listen(8080)
 ```
 
 But oh no! This won't work if we call it from the server-side without a `req` object. But it's cool since we can specify `req` like this:
