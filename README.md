@@ -101,7 +101,7 @@ api.post('books', function (statusCode, data) {
 - **resources** - an object whose keys are resource names
     - a resource is an object with `get`, `post`, `put` and/or `delete` methods
 - **helpers** - an object whose keys are helper names
-    - a helper is a value that is available in all resource methods
+    - a [helper](#helpers) is a value that is available in all resource methods
     - i.e. passing in your `db` as a helper is recommended
 
 Your resource methods need to call either `send(json)` or `error(message)`.
@@ -165,4 +165,15 @@ app.get('/my-books.html', function (req, res) {
     res.send('You have ' + data.books.length + ' books.')
   })
 })
+```
+
+## Helpers
+
+If you're using [client-sessions](https://www.npmjs.com/package/client-sessions) or [bleh](https://www.npmjs.com/package/bleh), this is handy:
+
+```js
+helpers.getUser = function () {
+  var $ = this
+  return $.req && $.req.session && $.req.session.user || $.user || {}
+}
 ```
