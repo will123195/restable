@@ -44,6 +44,7 @@ api.prototype.run = function (method, resource, opts, cb) {
   var $ = xtend(this.opts.helpers, opts)
   $.query = xtend(query, opts.query)
   $.body = opts.body || {}
+  $.params = opts.params || {}
   $.send = function (code, response) {
     if (typeof response === 'undefined') {
       response = code
